@@ -1,0 +1,20 @@
+// Extraction des URLs des sites de mairie
+stylesheet(
+    version="1.0",
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform",
+) {
+    output(method="text", encoding="utf-8");
+
+    // Ajoute la ligne d'entête
+    match("/") {
+        [id;mairie;url]
+        apply-templates("node()");
+    }
+
+    // Traite chaque mairie (Organisme)
+    match("Organisme") {
+        value-of("@id"); [;]
+        value-of("Nom"); [;]
+        value-of("CoordonnéesNum/Url");
+    }
+}
